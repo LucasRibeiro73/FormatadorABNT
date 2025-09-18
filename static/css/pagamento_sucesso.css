@@ -1,0 +1,68 @@
+/* CSS para a Página de Sucesso */
+
+/* Reset básico e fonte */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo principal com fundo e centralização */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f7fb; /* Mesmo fundo do dashboard */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container central estilizado */
+.container {
+    background-color: #ffffff;
+    max-width: 550px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 5px solid #28a745; /* Detalhe verde de sucesso */
+}
+
+/* Título principal */
+h1 {
+    font-size: 2rem; /* 32px */
+    color: #2c3e50; /* Um tom de cinza-azulado escuro */
+    margin-bottom: 15px;
+}
+
+/* Parágrafos de texto */
+p {
+    font-size: 1rem; /* 16px */
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Botão "Voltar para o Painel" */
+a {
+    display: inline-block;
+    background-color: #28a745; /* Verde sucesso */
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transição suave para o hover */
+}
+
+/* Efeito ao passar o mouse no botão */
+a:hover {
+    background-color: #218838; /* Verde mais escuro */
+    transform: translateY(-3px); /* Efeito de "levantar" */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}

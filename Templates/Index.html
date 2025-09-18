@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-g">
+    <title>Formatador ABNT</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formatador ABNT Express</h1>
+        <p>Faça o upload do seu trabalho (.docx) para formatação automática.</p>
+        
+        <form action="/formatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="arquivo_usuario" accept=".docx" required>
+            <br><br>
+            <input type="submit" value="Formatar e Baixar">
+        </form>
+    </div>
+</body>
+</html>

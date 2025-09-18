@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamento Aprovado!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pagamento_sucesso.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>✔️ Pagamento Realizado com Sucesso!</h1>
+        <p>Obrigado pela sua compra. Seus créditos serão adicionados à sua conta em instantes.</p>
+        <p>O sistema já foi notificado e está processando seu pacote.</p>
+        <br>
+        <a href="{{ url_for('dashboard') }}">Voltar para o Painel</a>
+    </div>
+</body>
+</html>

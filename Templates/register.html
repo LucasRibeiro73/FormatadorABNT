@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-g">
+    <title>Formatador ABNT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Crie sua Conta</h1>
+        <form method="POST" action="/register">
+            <label>Email:</label><br>
+            <input type="email" name="email" required><br>
+            <label>Senha:</label><br>
+            <input type="password" name="password" required><br><br>
+            <input type="submit" value="Cadastrar">
+        </form>
+        <a href="{{ url_for('login') }}">Já tem uma conta? Faça o login</a>
+    </div>
+</body>
+</html>

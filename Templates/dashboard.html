@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-g">
+    <title>Formatador ABNT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo, {{ user_email }}!</h1>
+
+        {% set messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category != 'success' %}
+                    <div class="alert alert-{{ category }}" style="grid-column: span 2;">
+                        {{ message | safe }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="main-content">
+            <div class="instructions-card">
+                <h3>Primeiros Passos</h3><br>
+                <p>Para formatar seu trabalho, siga as etapas:</p><br>
+                <ol>
+                    <li><strong>Baixe nosso template oficial.</strong> É essencial usar este modelo.</li>
+                    <li>Preencha o template com o conteúdo do seu trabalho.</li>
+                    <li>Volte aqui e envie o arquivo preenchido na área de upload abaixo.</li>
+                </ol>
+                <a href="{{ url_for('download_template') }}" class="download-button">Baixar Template ABNT</a>
+            </div>
+
+            <div class="credit-card">
+                <h3>Saldo de Créditos:</h3>
+                <div class="balance">{{ credits }}</div>
+
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'success' %}
+                            <div class="success-msg">
+                                <span>✔</span> {{ message | safe }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                <div class="upload-area" id="upload-area">
+                    <p id="upload-text">Arraste e solte seu arquivo aqui <br> ou clique para enviar</p>
+                    
+                    <form id="format-form" action="{{ url_for('formatar_arquivo') }}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="arquivo_usuario" id="file-input" accept=".docx" required>
+                        <button class="upload-button" type="submit">Formatar Agora (custa 1 crédito)</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="buy-section">
+                <h3>Comprar Mais Créditos</h3>
+                <form action="{{ url_for('criar_sessao_checkout', pacote=5) }}" method="POST">
+                    <button type="submit" class="buy-card">
+                        <div class="icon">$</div>
+                        <span>5 Créditos - R$ 9,90</span>
+                    </button>
+                </form>
+                <form action="{{ url_for('criar_sessao_checkout', pacote=15) }}" method="POST">
+                    <button type="submit" class="buy-card">
+                        <div class="icon">$</div>
+                        <span>15 Créditos - R$ 24,90</span>
+                    </button>
+                </form>
+                <form action="{{ url_for('criar_sessao_checkout', pacote=25) }}" method="POST">
+                    <button type="submit" class="buy-card">
+                        <div class="icon">$</div>
+                        <span>25 Créditos - R$ 34,90</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="logout-link">Sair (Logout)</a>
+    </div>
+    <script>
+    // Pega os elementos do HTML pelos seus IDs
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-input');
+    const uploadText = document.getElementById('upload-text');
+    const formatForm = document.getElementById('format-form');
+
+    // --- LÓGICA PARA O CLIQUE ---
+    // Quando o usuário clica no div...
+    uploadArea.addEventListener('click', () => {
+        // ...nós disparamos o clique no input de arquivo escondido.
+        fileInput.click();
+    });
+
+    // Impede que o clique no botão de submit dispare o clique no input
+    formatForm.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // --- LÓGICA PARA O ARQUIVO SELECIONADO ---
+    // Quando o usuário escolhe um arquivo na janela...
+    fileInput.addEventListener('change', () => {
+        // ...verificamos se um arquivo foi realmente selecionado.
+        if (fileInput.files.length > 0) {
+            // E atualizamos o texto para mostrar o nome do arquivo.
+            uploadText.innerHTML = `Arquivo selecionado:<br><strong>${fileInput.files[0].name}</strong>`;
+        }
+    });
+
+    // --- LÓGICA PARA ARRASTAR E SOLTAR (DRAG & DROP) ---
+    // Previne o comportamento padrão do navegador
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+
+    // Adiciona o efeito visual quando o arquivo está sobre a área
+    uploadArea.addEventListener('dragover', () => {
+        uploadArea.classList.add('drag-over');
+    });
+
+    // Remove o efeito visual quando o arquivo sai da área
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+    });
+
+    // Quando o usuário solta o arquivo na área...
+    uploadArea.addEventListener('drop', (e) => {
+        uploadArea.classList.remove('drag-over');
+        
+        // Pega o arquivo que foi solto
+        const droppedFiles = e.dataTransfer.files;
+        if (droppedFiles.length > 0) {
+            // Coloca o arquivo no nosso input escondido
+            fileInput.files = droppedFiles;
+            // Atualiza o texto para mostrar o nome do arquivo
+            uploadText.innerHTML = `Arquivo selecionado:<br><strong>${droppedFiles[0].name}</strong>`;
+        }
+    });
+
+</script>
+</body> 
+</html>
